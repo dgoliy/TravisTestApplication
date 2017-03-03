@@ -46,9 +46,9 @@ before_script:
 script:
   - echo -e "Travis branch is \033[1m$TRAVIS_BRANCH\033[0m"
   - echo -e "\n\n\n==============================================================================\nRunning \033[4m\033[1mLocal Release Unit Tests\033[0m now..."
-  - ./gradlew testReleaseUnitTest --continue | grep -v -e ":app:" -e ":testmodule:"
+  - ./gradlew testReleaseUnitTest --continue
   - echo -e "\n\n\n==============================================================================\nRunning \033[4m\033[1mInstrumented Unit Tests\033[0m now..."
-  - ./gradlew connectedAndroidTest --continue | grep -v -e ":app:" -e ":testmodule:"
+  - ./gradlew connectedAndroidTest --continue
 
 after_failure:
   - echo -e "\n\n\n======================================\n\033[4m\033[1mLint report:\033[0m"
