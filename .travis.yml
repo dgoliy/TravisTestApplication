@@ -34,18 +34,17 @@ android:
     - sys-img-$ANDROID_ABI-$EMULATOR_API_LEVEL
 
 before_install:
-  - chmod +x ./gradlew   #Grant permissions
+  #- chmod +x ./gradlew   #Grant permissions
   - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
-
-before_script:
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+
+before_script:
   - adb devices   #Display list of devices
 
 script:
   - echo "Travis branch is $TRAVIS_BRANCH"
-  - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
-  - ./gradlew connectedCheck -PdisablePreDex --stacktrace
+  - ./gradlew connectedAndroidTest
 
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
