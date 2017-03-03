@@ -47,4 +47,8 @@ script:
   - echo "Travis branch is $TRAVIS_BRANCH"
   - ./gradlew connectedAndroidTest
 
-after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+after_failure:
+  - echo "Lint results:"
+  -cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
+  - echo "androidTests results:"
+  -cat $TRAVIS_BUILD_DIR/app/build/reports/androidTests/connected/index.html
