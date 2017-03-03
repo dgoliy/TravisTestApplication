@@ -44,12 +44,12 @@ before_script:
   - adb devices   #Display list of devices
 
 script:
-  - echo "Travis branch is \033[1m$TRAVIS_BRANCH\033[0m"
-  - echo "======================================\nRunning \033[1mLocal Release Unit Tests\033[0m now"
+  - echo -e "Travis branch is \033[1m$TRAVIS_BRANCH\033[0m"
+  - echo -e "\n\n\n==============================================================================\nRunning \033[4m\033[1mLocal Release Unit Tests\033[0m now..."
   - ./gradlew testReleaseUnitTest --continue
-  - echo "======================================\nRunning \033[1mInstrumented Unit Tests\033[0m now"
+  - echo -e "\n\n\n==============================================================================\nRunning \033[4m\033[1mInstrumented Unit Tests\033[0m now..."
   - ./gradlew connectedAndroidTest --continue
 
 after_failure:
-  - echo -e "======================================\n\033[4mLint report:\033[0m"
+  - echo -e "\n\n\n======================================\n\033[4m\033[1mLint report:\033[0m"
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
