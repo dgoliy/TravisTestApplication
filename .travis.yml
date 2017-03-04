@@ -80,7 +80,7 @@ deploy:
   # only deploy if
   on:
     # only one matrix should deploy for now
-    condition: TARGET_API_LEVEL = 21
+    condition: $TARGET_API_LEVEL = 21
     # only on master
     # branch: master
     all_branches: true
