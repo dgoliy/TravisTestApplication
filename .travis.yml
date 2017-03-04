@@ -71,7 +71,7 @@ deploy:
     # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
     secure: P9C/3DsFxmcvS0hGN/y3hBb4caiaa6TuhJBJmLwOPwZLcC0/thPkn5vKcy9A7TkzotIV1SITXrSoZ2s1O/BUzayYDdCiFHrNwCyzf234UpCGhJU8e38KCpYO+ekJsdbMzY5jfezEMgnMkpe4nNI1W+EFO0D2VYWU8qDIEwR9ym8iwCHsSVYecL2C3X5T8uxppDIZFXJB/VljGvjOo7iqb/iQ2JAkibGAiLzFz3YILrIMKFfsOXeCeddw08iYg5+kzzc9WWVuSUfmi5J3NIKsLvWt0G2tzSdOBo73uBVEcxGEMVF0FJnM7uLIju85lccEbSnhuZ+TR8iBNEU/ncMv8VxD7OTR3rJgNzCy01kA9DV4L3HyslQWLQUh/UypfWAwfdRaXC+oQm7vRzQLlAq2viv4mmpIBH1m1hKUV2prMcvY3dqWys51mwMPPNDNmZVyuUU5CCfuE4DoMkBqbBe4DeXEFV0FTVMs53lIH1XDGuDcdcAilGc7v6enHCwwp2Jr0EzAuaXH6aVYeu/EvCkRk8DKDwjetXK08aae8PbZpWsV1TQVqvqhuX2SPPXaMF5WSI0T98n+wkkCgjDRwlwJ/tswP/EVJiU1dxS2S1JKnRjMrWuZbu9ukFx0R4/J9TldTvu2YSd2RtlZuPBgR+DR1naAyddJB9I4btr3LYBdnT0=
   file: app/build/outputs/apk/app*release*.apk
-  file_glob: "true"
+  file_glob: true
   # do not delete the files we're trying to upload
   skip_cleanup: true
   on:
@@ -81,4 +81,4 @@ deploy:
     # branch: master
     all_branches: true
     # and we are building a tag
-    tags: true
+    # tags: true
