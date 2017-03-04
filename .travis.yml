@@ -61,6 +61,10 @@ script:
   - printf "\n\n\n==============================================================================\nRunning \033[4m\033[1mInstrumented Unit Tests\033[0m now...\n"
   - ./gradlew connectedAndroidTest -PdisablePreDex --continue
 
+after_script:
+  - cd app/build/outputs/apk/
+  - ls
+
 after_failure:
   - printf "\n\n\n==============================================================================\n\033[4m\033[1mLint report:\033[0m\n"
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
