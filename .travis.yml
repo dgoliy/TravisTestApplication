@@ -78,8 +78,7 @@ deploy:
   # do not delete the files we're trying to upload
   skip_cleanup: true
   on:
-    # only one matrix should deploy for now
-      condition: $DEPLOY = true
+    condition: $DEPLOY = true
     # only on master
     # branch: master
     all_branches: true
