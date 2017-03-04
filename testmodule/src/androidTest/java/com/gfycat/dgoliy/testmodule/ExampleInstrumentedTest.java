@@ -27,6 +27,6 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void incorrectApi() throws Exception {
-        assertTrue(Build.VERSION.SDK_INT > 19);
+        assertTrue(Build.VERSION.SDK_INT >= 19);
     }
 }
