@@ -1,4 +1,4 @@
-package com.gfycat.dgoliy.testmodule;
+package com.exdeny.module.testmodule;
 
 import android.content.Context;
 import android.os.Build;
@@ -22,7 +22,7 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.gfycat.dgoliy.testmodule.test", appContext.getPackageName());
+        assertEquals("com.exdeny.module.testmodule.test", appContext.getPackageName());
     }
 
     @Test

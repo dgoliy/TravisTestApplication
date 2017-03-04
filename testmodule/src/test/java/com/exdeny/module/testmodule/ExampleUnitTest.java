@@ -1,4 +1,4 @@
-package com.gfycat.dgoliy.testmodule;
+package com.exdeny.module.testmodule;
 
 import org.junit.Test;
 
