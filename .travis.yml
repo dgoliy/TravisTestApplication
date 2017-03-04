@@ -71,7 +71,7 @@ deploy:
   # The oauth token for github (used by travis to upload the file(s) to github)
   api_key:
     # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
-    secure: "QTG2ozhCTTI2Ibsa0mj9oW/5Dt6xV/tCKU3eDp+fjLZTC4HFScNGNEIylnhK2EmFW2BqePTmzyJfsJQh2xHqxpi1WgTrAGPpeDx4QNwsQMhqqDbpLt/rkgs4l6ahxKzev/mq5PUa4WZe2QYQK724NBG69yxdb2TCuAGwrJiKlllbdUU2qSYErVLHU2mqYP+pri3u+/mM+h/m4ohIUNr9R22asDNyou1wbBIiM06gDecknxQvTj0QHXKE/hlxsg0UE0Ky2GtTlAkJ9BYnCMsk7Y0jtO3EjG9ZV/cIhiE8XlLEbnHy9KdSwnhU9aRlG9vB4jZMRsrRazV6AqPsDsPExHVlJdZhFEVMaxj8sfltuTga+cQrPYWYOwcW5DT3hZ3Vlhw3V00JUIRtJCjrbRBefkxglfDKk8sGn6uy7+iNWO572ZO3PCAgsjFtasRyx0K0LcHFRMlEqLD/+GW0Do4Kouu2NDk7iyInC3KSUC5gHEEpo6LWFLu+w+oc9jMf6PTath1XQgJqn6dhoT3k08LuICn64pdaBz72fK5UAnBHTFioceA1CqAXhiy2pHGsx/HAyVtGwvBts3hhcPVcFctaYWrTp/6fAfAdGpEAsvQBtBDSQbb5MZdB0o3xCQTQfx8EhrWVWVBfBOVdQKQeCXHo1x3qZpC4aL0FXmqrs5xf9fQ="
+    secure: "l4ZVvecvJBpTInLEob4RrI4cOyMChYNw1lYdwba5Ct4pMYF6Ea2hCLPvq2UcIuG9shhBhoJ99BSu1VyyHPk63FhEn2Q03BcVuPjQPpCh6esKxrHlmCapeqAKHVIQkGxjAt7rWYXzSuB2ZnzWgz8JGF1Ybw+q04SCBdEFAKStRr3O+FfEC3NQd1zuLM9rE8RS2SPnw1ExqGQiq4fYgAODMp0SiL4247k+Yq97qx7AbgZsylZN8F4H+qf9Wa0oqe5GzsftO4/2JMjpaKLa8lwPeesmoy8702v7nNkHAsydLjlucb4Gs/CMzOhHlu/I3H6YFLPBK9XGSHLo8NnlkVrUIWyMpcU0/tuKjr94dcP7NJjdydNZn2xb5urVWOZybqjHVYOiAPic+ZR31EDXXM4mUX9GZUhvxernLK11IZLNonjdhmyhLYBfNlJ4Kx3xsdESfmLqr32NeJRfRzCm7wO6+00v1DMqszHjijnQbP08YB5R07OoM/115N4BJxEDyOCkqFio04D7Luwj+fuGZCmSoClOryyhs8sl5yUrrnVkTKeMVKDFAf8OM3LEFgO8JM2BvZSs5cpdjkqwxoJNGUNrRg8T5nvIXhpmwcKB2T6hDdpZqnzckwerJ9gFUbKN8ZnVBQ+BWQLs/1lceVVzWBvKdf8ys7+lxai4sATkAVaKPCI="
   # Which file(s) to upload
   file: app/build/outputs/apk/app*release*.apk
   file_glob: "true"
@@ -79,6 +79,8 @@ deploy:
   skip_cleanup: true
   # only deploy if
   on:
+    # only one matrix should deploy for now
+    condition: TARGET_API_LEVEL = 21
     # only on master
     # branch: master
     all_branches: true
