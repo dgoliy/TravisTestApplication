@@ -64,3 +64,23 @@ script:
 after_failure:
   - printf "\n\n\n==============================================================================\n\033[4m\033[1mLint report:\033[0m\n"
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
+
+deploy:
+  # Deploy the file(s) to the github release (other targets like amazon-aws or npm can be found here: http://docs.travis-ci.com/user/deployment/ )
+  provider: releases
+  # The oauth token for github (used by travis to upload the file(s) to github)
+  api_key:
+    # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
+    secure: "QTG2ozhCTTI2Ibsa0mj9oW/5Dt6xV/tCKU3eDp+fjLZTC4HFScNGNEIylnhK2EmFW2BqePTmzyJfsJQh2xHqxpi1WgTrAGPpeDx4QNwsQMhqqDbpLt/rkgs4l6ahxKzev/mq5PUa4WZe2QYQK724NBG69yxdb2TCuAGwrJiKlllbdUU2qSYErVLHU2mqYP+pri3u+/mM+h/m4ohIUNr9R22asDNyou1wbBIiM06gDecknxQvTj0QHXKE/hlxsg0UE0Ky2GtTlAkJ9BYnCMsk7Y0jtO3EjG9ZV/cIhiE8XlLEbnHy9KdSwnhU9aRlG9vB4jZMRsrRazV6AqPsDsPExHVlJdZhFEVMaxj8sfltuTga+cQrPYWYOwcW5DT3hZ3Vlhw3V00JUIRtJCjrbRBefkxglfDKk8sGn6uy7+iNWO572ZO3PCAgsjFtasRyx0K0LcHFRMlEqLD/+GW0Do4Kouu2NDk7iyInC3KSUC5gHEEpo6LWFLu+w+oc9jMf6PTath1XQgJqn6dhoT3k08LuICn64pdaBz72fK5UAnBHTFioceA1CqAXhiy2pHGsx/HAyVtGwvBts3hhcPVcFctaYWrTp/6fAfAdGpEAsvQBtBDSQbb5MZdB0o3xCQTQfx8EhrWVWVBfBOVdQKQeCXHo1x3qZpC4aL0FXmqrs5xf9fQ="
+  # Which file(s) to upload
+  file: app/build/outputs/apk/app*release*.apk
+  file_glob: "true"
+  # do not delete the files we're trying to upload
+  skip_cleanup: true
+  # only deploy if
+  on:
+    # only on master
+    # branch: master
+    all_branches: true
+    # and we are building a tag
+    tags: true
