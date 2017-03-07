@@ -8,6 +8,7 @@ env:
     - TARGET_API_LEVEL=19 DEPLOY=false
     - TARGET_API_LEVEL=21 DEPLOY=true
   global:
+    - NDK_VERSION=r10e
     - ANDROID_API_LEVEL=25
     - ANDROID_BUILD_TOOLS_VERSION=25.0.2
     - ANDROID_ABI=armeabi-v7a
@@ -46,6 +47,13 @@ cache:
     - $HOME/.gradle/wrapper/
 
 before_install:
+  # NDK setup
+  - wget http://dl.google.com/android/ndk/android-ndk-$NDK_VERSION-linux-x86_64.bin
+  - chmod +x android-ndk-$NDK_VERSION-linux-x86_64.bin
+  - ./android-ndk-$NDK_VERSION-linux-x86_64.bin | egrep -v ^Extracting
+  - export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
+  - export PATH=${PATH}:${ANDROID_NDK_HOME}
+  # emulator start
   - echo no | android create avd --force -n test -t "android-"$TARGET_API_LEVEL --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
