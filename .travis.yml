@@ -71,8 +71,8 @@ script:
   - ./gradlew connectedAndroidTest -PdisablePreDex --continue
 
 after_failure:
-  - printf "\033[4m\033[1mLOGCAT REPORT ($LOGCAT_LAST_COUNT)\033[0m\n"
-  - adb logcat -t $LOGCAT_LAST_COUNT
+  - printf "\033[4m\033[1mLOGCAT REPORT\033[0m\n"
+  - adb logcat -t 500
   - printf "\033[4m\033[1mLint report:\033[0m\n"
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
 
