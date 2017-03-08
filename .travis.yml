@@ -5,10 +5,9 @@ sudo: false
 
 env:
   matrix:
-    - TARGET_API_LEVEL=19 DEPLOY=false
-    - TARGET_API_LEVEL=21 DEPLOY=true
+    - TARGET_API_LEVEL=19
+    - TARGET_API_LEVEL=21 DEPLOY_FILE=app/build/outputs/apk/app*release*.apk
   global:
-    - NDK_VERSION=r10e
     - ANDROID_API_LEVEL=25
     - ANDROID_BUILD_TOOLS_VERSION=25.0.2
     - ANDROID_ABI=armeabi-v7a
@@ -47,13 +46,6 @@ cache:
     - $HOME/.gradle/wrapper/
 
 before_install:
-  # NDK setup
-  - wget http://dl.google.com/android/ndk/android-ndk-$NDK_VERSION-linux-x86_64.bin
-  - chmod +x android-ndk-$NDK_VERSION-linux-x86_64.bin
-  - ./android-ndk-$NDK_VERSION-linux-x86_64.bin | egrep -v ^Extracting
-  - export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
-  - export PATH=${PATH}:${ANDROID_NDK_HOME}
-  # emulator start
   - echo no | android create avd --force -n test -t "android-"$TARGET_API_LEVEL --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
@@ -64,13 +56,13 @@ before_script:
 
 script:
   - printf "Travis branch is \033[1m$TRAVIS_BRANCH\033[0m\n"
-  - printf "\n\n\n==============================================================================\nRunning \033[4m\033[1mLocal Release Unit Tests\033[0m now...\n"
+  - printf "Running \033[4m\033[1mLocal Release Unit Tests\033[0m now...\n"
   - ./gradlew testReleaseUnitTest -PdisablePreDex --continue
-  - printf "\n\n\n==============================================================================\nRunning \033[4m\033[1mInstrumented Unit Tests\033[0m now...\n"
+  - printf "Running \033[4m\033[1mInstrumented Unit Tests\033[0m now...\n"
   - ./gradlew connectedAndroidTest -PdisablePreDex --continue
 
 after_failure:
-  - printf "\n\n\n==============================================================================\n\033[4m\033[1mLint report:\033[0m\n"
+  - printf "\033[4m\033[1mLint report:\033[0m\n"
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
 
 after_success:
@@ -81,12 +73,12 @@ deploy:
   api_key:
     # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
     secure: P9C/3DsFxmcvS0hGN/y3hBb4caiaa6TuhJBJmLwOPwZLcC0/thPkn5vKcy9A7TkzotIV1SITXrSoZ2s1O/BUzayYDdCiFHrNwCyzf234UpCGhJU8e38KCpYO+ekJsdbMzY5jfezEMgnMkpe4nNI1W+EFO0D2VYWU8qDIEwR9ym8iwCHsSVYecL2C3X5T8uxppDIZFXJB/VljGvjOo7iqb/iQ2JAkibGAiLzFz3YILrIMKFfsOXeCeddw08iYg5+kzzc9WWVuSUfmi5J3NIKsLvWt0G2tzSdOBo73uBVEcxGEMVF0FJnM7uLIju85lccEbSnhuZ+TR8iBNEU/ncMv8VxD7OTR3rJgNzCy01kA9DV4L3HyslQWLQUh/UypfWAwfdRaXC+oQm7vRzQLlAq2viv4mmpIBH1m1hKUV2prMcvY3dqWys51mwMPPNDNmZVyuUU5CCfuE4DoMkBqbBe4DeXEFV0FTVMs53lIH1XDGuDcdcAilGc7v6enHCwwp2Jr0EzAuaXH6aVYeu/EvCkRk8DKDwjetXK08aae8PbZpWsV1TQVqvqhuX2SPPXaMF5WSI0T98n+wkkCgjDRwlwJ/tswP/EVJiU1dxS2S1JKnRjMrWuZbu9ukFx0R4/J9TldTvu2YSd2RtlZuPBgR+DR1naAyddJB9I4btr3LYBdnT0=
-  file: app/build/outputs/apk/app*release*.apk
+  file: $DEPLOY_FILE
   file_glob: true
   # do not delete the files we're trying to upload
   skip_cleanup: true
   on:
-    condition: $DEPLOY = true
+    condition: $DEPLOY_FILE != ""
     # only on master
     # branch: master
     all_branches: true
