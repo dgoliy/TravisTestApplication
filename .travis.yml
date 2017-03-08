@@ -5,9 +5,10 @@ sudo: false
 
 env:
   matrix:
-    - TARGET_API_LEVEL=19
-    - TARGET_API_LEVEL=21 DEPLOY_FILE=app/build/outputs/apk/app*release*.apk
+    - TARGET_API_LEVEL=19 DEPLOY=false
+    - TARGET_API_LEVEL=21 DEPLOY=true
   global:
+    - DEPLOY_FILE=app/build/outputs/apk/app*release*.apk
     - ANDROID_API_LEVEL=25
     - ANDROID_BUILD_TOOLS_VERSION=25.0.2
     - ANDROID_ABI=armeabi-v7a
@@ -62,6 +63,8 @@ script:
   - ./gradlew connectedAndroidTest -PdisablePreDex --continue
 
 after_failure:
+  - printf "\033[4m\033[1mLOGCAT REPORT ($LOGCAT_LAST_COUNT)\033[0m\n"
+  - adb logcat -t $LOGCAT_LAST_COUNT
   - printf "\033[4m\033[1mLint report:\033[0m\n"
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
 
@@ -78,7 +81,7 @@ deploy:
   # do not delete the files we're trying to upload
   skip_cleanup: true
   on:
-    condition: $DEPLOY_FILE != ""
+    condition: $DEPLOY = true
     # only on master
     # branch: master
     all_branches: true
